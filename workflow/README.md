@@ -1,5 +1,12 @@
 # Instructions for generating the 1-OGC catalog on the Open Science Grid
 
+**Alexander H. Nitz<sup>1,2</sup>, Collin Capano<sup>1,2</sup>, Alex B. Nielsen<sup>1,2</sup>, Steven Reyes<sup>3</sup>, Rebecca White<sup>4,3</sup>, Duncan A. Brown<sup>3</sup>, Badri Krishnan<sup>1,2</sup>**
+
+ <sub>1.[Albert-Einstein-Institut, Max-Planck-Institut for Gravitationsphysik, D-30167 Hannover, Germany](http://www.aei.mpg.de/obs-rel-cos)</sub>  
+ <sub>2.Leibniz Universitat Hannover, D-30167 Hannover, Germany</sub>  
+ <sub>3. Department of Physics, Syracuse University, Syracuse, NY 13244, USA</sub>  
+ <sub>4. Fayetteville-Manlius High School, Manlius, NY 13104, USA</sub>  
+
 This directory contains the scripts and configuration files necessary to reproduce the 1-OGC catalog using public data and code using the [Open Science Grid](). To use these instructions, you will need an [OSG Connect](https://support.opensciencegrid.org/support/solutions/articles/5000632072-registration-and-login-for-osg-connect) account.
 
 ## Set up environment
@@ -105,3 +112,6 @@ Note that Pegasus Dashboard is not available on the OSG Connect head node, so th
 pegasus-status -l /local-scratch/dbrown/workflows/pycbc-tmp.PyyyqHqm3r/work 
 ```
 
+## Acknowledgments ##
+We thank Thomas Dent and Sumit Kumar for useful discussions and comments. We thank Stuart Anderson, Jonah Kannah, and Alan Weinstein for help accessing data from the Gravitational-Wave Open Science Center.  We acknowledge the Max Planck Gesellschaft for support and the Atlas cluster computing team at AEI Hannover. Computations were also supported by Syracuse University and NSF award OAC-1541396. DAB acknowledges NSF awards PHY-1707954, OAC-1443047, and OAC-1738962 for support. SR acknowledges NSF award PHY-1707954 and OAC-1443047 for support. RW acknowledges NSF award OAC-1823378 for support. 
+This research has made use of data, software and/or web tools obtained from the Gravitational Wave Open Science Center (https://www.gw-openscience.org), a service of LIGO Laboratory, the LIGO Scientific Collaboration and the Virgo Collaboration. LIGO is funded by the U.S. National Science Foundation. Virgo is funded by the French Centre National de Recherche Scientifique (CNRS), the Italian Istituto Nazionale della Fisica Nucleare (INFN) and the Dutch Nikhef, with contributions by Polish and Hungarian institutes.
