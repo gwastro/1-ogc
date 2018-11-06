@@ -10,7 +10,7 @@
 
 ## Introduction ##
 
-This repository contains the first Open Gravitational-wave Catalog (1-OGW), which is obtained by using the public data from Advanced LIGO's first observing to search for compact-object binary mergers. Our analysis is based on new methods that improve the separation between signals and noise in matched-filter searches for gravitational waves from the merger of compact objects. 
+This repository contains the first Open Gravitational-wave Catalog (1-OGW), which is obtained by using the public data from Advanced LIGO's first observing run to search for compact-object binary mergers. Our analysis is based on new methods that improve the separation between signals and noise in matched-filter searches for gravitational waves from the merger of compact objects. 
 
 We make available our complete catalog of events, including the sub-threshold population of candidates. The catalog contains approximately 150,000 candidate events. We note that since the vast majority of the events in the catalog are likely to be noise, we have provided information to rank and select candidate events. The three most significant signals in our catalog correspond to the binary black hole mergers  [GW150914](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102), [GW151226](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.241103), and [LVT151012](https://journals.aps.org/prd/abstract/10.1103/PhysRevD.93.122003), respectively. We observe these signals at a true discovery rate of 99.92%. We find that LVT151012 alone has a 97.6% probability of being astrophysical in origin. No other significant binary black hole candidates are found, nor did we observe any significant binary neutron star or neutron star--black hole candidates.
 
