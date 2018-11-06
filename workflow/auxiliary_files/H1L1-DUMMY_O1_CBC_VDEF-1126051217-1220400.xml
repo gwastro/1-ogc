@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE LIGO_LW SYSTEM "http://ldas-sw.ligo.caltech.edu/doc/ligolwAPI/html/ligolw_dtd.txt">
+<LIGO_LW>
+	<Table Name="process:table">
+		<Column Type="lstring" Name="process:comment"/>
+		<Column Type="int_4s" Name="process:cvs_entry_time"/>
+		<Column Type="lstring" Name="process:cvs_repository"/>
+		<Column Type="lstring" Name="process:domain"/>
+		<Column Type="int_4s" Name="process:end_time"/>
+		<Column Type="lstring" Name="process:ifos"/>
+		<Column Type="int_4s" Name="process:is_online"/>
+		<Column Type="int_4s" Name="process:jobid"/>
+		<Column Type="lstring" Name="process:node"/>
+		<Column Type="ilwd:char" Name="process:process_id"/>
+		<Column Type="lstring" Name="process:program"/>
+		<Column Type="int_4s" Name="process:start_time"/>
+		<Column Type="int_4s" Name="process:unix_procid"/>
+		<Column Type="lstring" Name="process:username"/>
+		<Column Type="lstring" Name="process:version"/>
+		<Stream Delimiter="," Type="Local" Name="process:table">
+			,,,,,"H1L1,",0,0,"sugwg-condor.phy.syr.edu","process:process_id:0","ligolw-vetodef-create",1205873193,633385,"steven.reyes","0.1"
+		</Stream>
+	</Table>
+	<Table Name="process_params:table">
+		<Column Type="lstring" Name="process_params:param"/>
+		<Column Type="ilwd:char" Name="process_params:process_id"/>
+		<Column Type="lstring" Name="process_params:program"/>
+		<Column Type="lstring" Name="process_params:type"/>
+		<Column Type="lstring" Name="process_params:value"/>
+		<Stream Delimiter="," Type="Local" Name="process_params:table">
+			"output-file","process:process_id:0","ligolw-vetodef-create","lstring","H1L1-DUMMY_O1_CBC_VDEF-1126051217-1220400.xml",
+			"--ifos","process:process_id:0","ligolw-vetodef-create","lstring","H1L1"
+		</Stream>
+	</Table>
+	<Table Name="veto_definer:table">
+		<Column Type="int_4s" Name="veto_definer:category"/>
+		<Column Type="lstring" Name="veto_definer:comment"/>
+		<Column Type="int_4s" Name="veto_definer:end_pad"/>
+		<Column Type="int_4s" Name="veto_definer:end_time"/>
+		<Column Type="lstring" Name="veto_definer:ifo"/>
+		<Column Type="lstring" Name="veto_definer:name"/>
+		<Column Type="ilwd:char" Name="veto_definer:process_id"/>
+		<Column Type="int_4s" Name="veto_definer:start_pad"/>
+		<Column Type="int_4s" Name="veto_definer:start_time"/>
+		<Column Type="int_4s" Name="veto_definer:version"/>
+		<Stream Delimiter="," Type="Local" Name="veto_definer:table">
+			1,"Add veto just for pycbc code",1,1126051211,"H1","STEVEN_FLAG",,1,1126051210,1
+		</Stream>
+	</Table>
+</LIGO_LW>
