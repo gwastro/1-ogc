@@ -93,8 +93,9 @@ fi
 echo "Generating workflow for analysis ${n} using ${DATA_TYPE} data and PyCBC ${PYCBC_TAG}"
 
 # locations of analysis directory and results directory
-PROJECT_PATH=/stash/user/$USER/1-ogc/analysis/analysis-${n}
-WEB_PATH=/stash/user/$USER/public/results/1-ogc/analysis-${n}
+UNIQUE_ID=`uuidgen`
+PROJECT_PATH=/stash/user/${USER}/1-ogc/analysis/analysis-${n}/${UNIQUE_ID}
+WEB_PATH=/stash/user/${USER}/public/1-ogc/results/analysis-${n}/${UNIQUE_ID}
 
 set -e
 
@@ -175,3 +176,8 @@ fi
 
 popd
 popd
+
+echo
+echo "Workflow created in ${PROJECT_PATH}/${WORKFLOW_NAME}"
+echo "Results will be availale in ${OUTPUT_PATH}"
+echo
