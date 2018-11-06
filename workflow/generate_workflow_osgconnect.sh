@@ -93,8 +93,8 @@ fi
 echo "Generating workflow for analysis ${n} using ${DATA_TYPE} data and PyCBC ${PYCBC_TAG}"
 
 # locations of analysis directory and results directory
-PROJECT_PATH=/stash/user/$USER/o1-open-catalog/analysis/analysis-${n}
-WEB_PATH=/stash/user/$USER/public/o1-open-catalog/results/analysis-${n}
+PROJECT_PATH=/stash/user/$USER/1-ogc/analysis/analysis-${n}
+WEB_PATH=/stash/user/$USER/public/results/1-ogc/analysis-${n}
 
 set -e
 
@@ -166,13 +166,11 @@ if [ "x${NO_PLAN}" == "x" ] ; then
     --local-staging-server 'stash://' \
     --remote-staging-server 'stash://' \
     --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
-    --append-pegasus-property 'pegasus.integrity.checking=none' \
     --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
     --append-site-profile 'osgconnect:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
     --append-site-profile 'osgconnect:condor|+SingularityImage:"/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:latest"' \
     --force-no-accounting-group ${NO_SUBMIT} \
-    --local-dir /local-scratch/${USER}/workflows \
-    --no-grid
+    --local-dir /local-scratch/${USER}/workflows
 fi
 
 popd
