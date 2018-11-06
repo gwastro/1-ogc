@@ -87,10 +87,10 @@ We encourage use of these data in derivative works. If you use the material prov
       title          = "{1-OGC: The first open gravitational-wave catalog of
                          binary mergers from analysis of public Advanced LIGO data}",
       year           = "2018",
-      eprint         = "XXXX.XXXXX",
+      eprint         = "1811.01921",
       archivePrefix  = "arXiv",
       primaryClass   = "gr-qc",
-      SLACcitation   = "%%CITATION = ARXIV:XXXX.XXXXX;%%"
+      SLACcitation   = "%%CITATION = ARXIV:1811.01921;%%"
 }
 ```
 
