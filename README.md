@@ -50,6 +50,7 @@ LIGO Hanford or Livingston detectors. Where this is the case, the name of the co
 | Key           | Description                                                                                                                         |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | name          | The designation of the candidate event. This is of the form 150812+12:23:04UTC.                                                     |
+| jd | Julian Date of the average between the Hanford and Livingston observed end times |
 | far           | The rate of false alarms with a ranking statistic as large or larger than this event. The unit is yr^-1.                                                                                                           |
 | stat          | The value of the ranking statistic for this candidate event.                                                                                       |
 | mass1         | The component mass of one compact object in the template waveform which found this candidate. Units in detector frame solar masses. |
