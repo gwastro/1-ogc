@@ -94,8 +94,8 @@ echo "Generating workflow for analysis ${n} using ${DATA_TYPE} data and PyCBC ${
 
 # locations of analysis directory and results directory
 UNIQUE_ID=`uuidgen`
-PROJECT_PATH=/stash/user/${USER}/1-ogc/analysis/analysis-${n}/${UNIQUE_ID}
-WEB_PATH=/stash/user/${USER}/public/1-ogc/results/analysis-${n}/${UNIQUE_ID}
+PROJECT_PATH=/stash/user/${USER}/1-ogc/analysis/analysis-${n}-${UNIQUE_ID}
+WEB_PATH=/stash/user/${USER}/public/1-ogc/results/analysis-${n}-${UNIQUE_ID}
 
 set -e
 
@@ -108,25 +108,8 @@ WORKFLOW_TITLE="'O1 Analysis ${n} ${DATA_TYPE}'"
 WORKFLOW_SUBTITLE="'PyCBC Open GW Analysis'"
 
 if [ -d ${PROJECT_PATH}/$WORKFLOW_NAME ] ; then
-  echo "${PROJECT_PATH}/$WORKFLOW_NAME already exists"
-  echo "Do you want to remove this directory or skip to the next block? Type remove or skip"
-  read RESPONSE
-  if test x$RESPONSE == xremove ; then
-    echo "Are you sure you want to remove ${WORKFLOW_NAME}?"
-    echo "Type remove to delete ${PROJECT_PATH}/$WORKFLOW_NAME or anything else to exit"
-    read REMOVE
-    if test x$REMOVE == xremove ; then
-      rm -rf ${PROJECT_PATH}/$WORKFLOW_NAME
-    else
-      echo "You did not type remove. Exiting"
-      exit 1
-    fi
-  elif test x$RESPONSE == xskip ; then
-    exit 0
-  else
-    echo "Error: unknown response $RESPONSE"
-    exit 1
-  fi
+  echo "Error: ${PROJECT_PATH}/$WORKFLOW_NAME already exists."
+  exit 1
 fi
 mkdir -p ${PROJECT_PATH}/$WORKFLOW_NAME
 pushd ${PROJECT_PATH}/$WORKFLOW_NAME
