@@ -154,6 +154,7 @@ pycbc_make_coinc_search_workflow \
   "workflow-segments:segments-veto-definer-url:https://github.com/gwastro/1-ogc/raw/master/workflow/auxiliary_files/H1L1-DUMMY_O1_CBC_VDEF-1126051217-1220400.xml" \
   "coinc:statistic-files:http://stash.osgconnect.net/~dbrown/1-ogc/workflow/auxiliary_files/dtime-dphase-stat.hdf" \
   "workflow-${WORKFLOW_NAME}-main:staging-site:osgconnect=osgconnect-scratch" \
+  "pegasus_profile-inspiral:condor|request_memory:2400" \
   "optimal_snr:cores:8"
 
 pushd output
