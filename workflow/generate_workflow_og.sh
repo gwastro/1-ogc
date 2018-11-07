@@ -158,6 +158,7 @@ pycbc_make_coinc_search_workflow \
   "pegasus_profile-inspiral:container|image_site:orangegrid" \
   "pegasus_profile-inspiral:container|mount:/cvmfs:/cvmfs:ro" \
   "pegasus_profile-inspiral:condor|request_memory:2400" \
+  "executables:inspiral:/opt/pycbc/pycbc-software/bin/pycbc_inspiral" \
   "pegasus_profile-inspiral:pycbc|site:orangegrid" \
   "pegasus_profile-inspiral:hints|execution.site:orangegrid" \
   "workflow-${WORKFLOW_NAME}-main:staging-site:orangegrid=local" \
