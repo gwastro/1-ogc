@@ -97,13 +97,21 @@ The workflow is planned by [Pegasus WMS](https://pegasus.isi.edu). You will need
 export PATH=/stash/user/dbrown/public/pegasus-4.9.1dev/bin:${PATH}
 ```
 
+## Clone this repository
+
+Clone this repository into your home directory (or another suitable location) on `login.osgconnect.org`. This can be any directory you like, *except* for directories under the PyCBC virtual environment you created. Use git to clone the respository and then change to the directory containing the clone with the commands
+```sh
+git clone https://github.com/gwastro/1-ogc.git
+cd 1-ogc
+```
+
 ## Create and plan the workflow
 
 The script `generate_workflow_osgconnect.sh` can be used to create and plan the workflow. Analyze one of the nine analysis segments of data, run the script with the command with the number of the segment that you want to analyze, for example:
 ```sh
-./generate_workflow_osgconnect.sh --analysis-segment 1
+./workflow/generate_workflow_osgconnect.sh --analysis-segment 1
 ```
-The workflow is created in the directory `/stash/user/${USER}/o1-open-catalog/analysis/analysis-N`, where `N` is the analysis segment number. The result pages will be created in `/stash/user/$USER/public/o1-open-catalog/results/analysis-N`.
+The workflow is created in the directory `/stash/user/${USER}/o1-open-catalog/analysis/analysis-N-UUID`, where `N` is the analysis segment number and `UUID` is a unique ID assigned by the workflow generation script. The result pages will be created in `/stash/user/$USER/public/o1-open-catalog/results/analysis-N-UUID`.
 
 This script performs several actions:
 1. It creates directories for the workflow and result pages.
@@ -113,36 +121,48 @@ This script performs several actions:
 
 When the workflow is planned and submitted, you will see a message like
 ```
-2018.11.05 21:07:11.244 CST:   Your workflow has been started and is running in the base directory: 
-2018.11.05 21:07:11.249 CST:    
-2018.11.05 21:07:11.254 CST:     /local-scratch/dbrown/workflows/pycbc-tmp.PyyyqHqm3r/work 
-2018.11.05 21:07:11.259 CST:    
-2018.11.05 21:07:11.265 CST:   *** To monitor the workflow you can run *** 
-2018.11.05 21:07:11.270 CST:    
-2018.11.05 21:07:11.275 CST:     pegasus-status -l /local-scratch/dbrown/workflows/pycbc-tmp.PyyyqHqm3r/work 
-2018.11.05 21:07:11.280 CST:    
-2018.11.05 21:07:11.285 CST:   *** To remove your workflow run *** 
-2018.11.05 21:07:11.291 CST:    
-2018.11.05 21:07:11.296 CST:     pegasus-remove /local-scratch/dbrown/workflows/pycbc-tmp.PyyyqHqm3r/work 
-2018.11.05 21:07:11.301 CST:    
-2018.11.05 21:07:11.616 CST:   Time taken to execute is 11.379 seconds 
+2018.11.07 17:08:28.529 CST:   Submitting to condor o1-analysis-1-v1_13_0-LOSC_16_V1-0.dag.condor.sub 
+2018.11.07 17:08:31.231 CST:   Submitting job(s). 
+2018.11.07 17:08:31.236 CST:   1 job(s) submitted to cluster 1037652. 
+2018.11.07 17:08:31.241 CST:    
+2018.11.07 17:08:31.247 CST:   Your workflow has been started and is running in the base directory: 
+2018.11.07 17:08:31.252 CST:    
+2018.11.07 17:08:31.257 CST:     /local-scratch/dbrown/workflows/pycbc-tmp.MF4haFwcCE/work 
+2018.11.07 17:08:31.262 CST:    
+2018.11.07 17:08:31.267 CST:   *** To monitor the workflow you can run *** 
+2018.11.07 17:08:31.273 CST:    
+2018.11.07 17:08:31.278 CST:     pegasus-status -l /local-scratch/dbrown/workflows/pycbc-tmp.MF4haFwcCE/work 
+2018.11.07 17:08:31.283 CST:    
+2018.11.07 17:08:31.289 CST:   *** To remove your workflow run *** 
+2018.11.07 17:08:31.294 CST:    
+2018.11.07 17:08:31.299 CST:     pegasus-remove /local-scratch/dbrown/workflows/pycbc-tmp.MF4haFwcCE/work 
+2018.11.07 17:08:31.304 CST:    
+2018.11.07 17:08:31.555 CST:   Time taken to execute is 38.112 seconds 
 
-Querying Pegasus database for workflow stored in /local-scratch/dbrown/workflows/pycbc-tmp.PyyyqHqm3r/work
-This may take up to 120 seconds. Please wait.................. Done.
+Querying Pegasus database for workflow stored in /local-scratch/dbrown/workflows/pycbc-tmp.MF4haFwcCE/work
+This may take up to 120 seconds. Please wait........................ Done.
 Workflow submission completed successfully.
 
 The Pegasus dashboard URL for this workflow is:
-  https://login03.osgconnect.net/pegasus/u/dbrown/r/3/w?wf_uuid=eb5db678-9246-423d-8b1f-07ed145bed95
+  https://login03.osgconnect.net/pegasus/u/dbrown/r/16/w?wf_uuid=b0baeba1-625d-417a-b0ba-770802a33d07
 
 Note that it make take a while for the dashboard entry to appear while the workflow
 is parsed by the dashboard. The delay can be on the order of one hour for very large
 workflows.
+
+/stash/user/dbrown/1-ogc/analysis/analysis-1-ea19e064-7e57-4d18-9248-293c8bbc1132/o1-analysis-1-v1.13.0-LOSC_16_V1 ~/1-ogc
+~/1-ogc
+
+Workflow created in /stash/user/dbrown/1-ogc/analysis/analysis-1-ea19e064-7e57-4d18-9248-293c8bbc1132/o1-analysis-1-v1.13.0-LOSC_16_V1
+Results will be availale in /stash/user/dbrown/public/1-ogc/results/analysis-1-ea19e064-7e57-4d18-9248-293c8bbc1132/o1-analysis-1-v1.13.0-LOSC_16_V1
 ```
 
 Note that Pegasus Dashboard is not available on the OSG Connect head node, so the dashboard URL printed will not work. You can check the status of the workflow by running `pegasus-status` as shown by the messages printed when the job is submitted, e.g.
 ```sh
-pegasus-status -l /local-scratch/dbrown/workflows/pycbc-tmp.PyyyqHqm3r/work 
+pegasus-status -l /local-scratch/dbrown/workflows/pycbc-tmp.MF4haFwcCE/work 
 ```
 
 ## Acknowledgments ##
-We thank Brian Bockelman, Mats Rynge, Karan Vahi, and Derek Weitzel for help with Pegasus, OSG, and StashCache. We thank Stuart Anderson, Jonah Kannah, and Alan Weinstein for help accessing data from the Gravitational-Wave Open Science Center.  DAB acknowledges NSF awards PHY-1707954, OAC-1443047, and OAC-1738962 for support. SR acknowledges NSF award PHY-1707954 and OAC-1443047 for support. RW acknowledges NSF award OAC-1823378 for support.
+
+We thank Brian Bockelman, Mike Brady, Edgar Fajardo Hernandez, Larne Pekowsky, Mats Rynge, Eric Sedore, Todd Tannenbaum, Karan Vahi, and Derek Weitzel for help with cyberinfrastructure. We thank Stuart Anderson, Jonah Kannah, and Alan Weinstein for help accessing data from the Gravitational-Wave Open Science Center. We thank Thomas Dent for helpful comments. This work is supported by NSF awards PHY-1707954, OAC-1443047, OAC-1541396, OAC-1738962, and OAC-1823378 and by the Max Planck Gesellschaft.
+
