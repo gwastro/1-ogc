@@ -107,11 +107,27 @@ cd 1-ogc
 
 ## Create and plan the workflow
 
-The script `generate_workflow_osgconnect.sh` can be used to create and plan the workflow. Analyze one of the nine analysis segments of data, run the script with the command with the number of the segment that you want to analyze, for example:
+The script `generate_workflow_osgconnect.sh` can be used to create and plan the workflow. 
+
+### Generating a test workflow
+
+Before you attempt to run an analysis segment, it is reccommended that you run a small test workflow with the command:
+```sh
+./workflow/generate_workflow_osgconnect.sh --test-workflow
+```
+
+The workflow is created in the directory `/stash/user/${USER}/o1-open-catalog/analysis/analysis-test-UUID`, where `N` is the analysis segment number and `UUID` is a unique ID assigned by the workflow generation script. The result pages will be created in `/stash/user/$USER/public/o1-open-catalog/results/analysis-test-UUID`.
+
+### Analyzing a segment of O1
+
+To analyze one of the nine analysis segments of data, run `generate_workflow_osgconnect.sh` with the argument of the `--analysis-segment` option set to the segment number that you want to analyze. For example to analyze segment 1, run the command:
 ```sh
 ./workflow/generate_workflow_osgconnect.sh --analysis-segment 1
 ```
+
 The workflow is created in the directory `/stash/user/${USER}/o1-open-catalog/analysis/analysis-N-UUID`, where `N` is the analysis segment number and `UUID` is a unique ID assigned by the workflow generation script. The result pages will be created in `/stash/user/$USER/public/o1-open-catalog/results/analysis-N-UUID`.
+
+### What happens when you run the workflow generation script?
 
 This script performs several actions:
 1. It creates directories for the workflow and result pages.
