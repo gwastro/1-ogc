@@ -17,7 +17,7 @@ We make available our complete catalog of events, including the sub-threshold po
 The catalog is stored in the file '1-OGC.hdf'. There are a variety of tools to access [hdf files](https://www.hdfgroup.org/) from numerous computing languages. Here we will focus on access through python and [h5py](www.h5py.org).
 
 ## Analysis Details ##
-Details of the analysis are available in this [preprint paper](https://arxiv.org/abs/1811.01921) and the configuration files needed to create the analysus workflows are provided in the [workflow/configuration](https://github.com/gwastro/1-ogc/tree/master/workflow/configuration) directory.
+Details of the analysis are available in this [preprint paper](https://arxiv.org/abs/1811.01921) and the configuration files needed to create the analysis workflows are provided in the [workflow/configuration](https://github.com/gwastro/1-ogc/tree/master/workflow/configuration) directory.
 
 ## Accessing the Catalog: 1-OGC.hdf ##
 
