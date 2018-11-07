@@ -7,7 +7,20 @@
  <sub>3. Department of Physics, Syracuse University, Syracuse, NY 13244, USA</sub>  
  <sub>4. Fayetteville-Manlius High School, Manlius, NY 13104, USA</sub>  
 
-This directory contains the scripts and configuration files necessary to reproduce the 1-OGC catalog using public data and code using the [Open Science Grid](). 
+This directory contains the scripts and configuration files necessary to reproduce the 1-OGC catalog using public data and code using the [Open Science Grid]().
+
+The contents of this directory are:
+
+ 1. [A script for generating, planning, and running the workflow on the Open Science Grid](https://github.com/duncan-brown/1-ogc/blob/master/workflow/generate_workflow_osgconnect.sh)
+ 2. [A script for generating, planning, and running the workflow on Syracuse University's Orange Grid](https://github.com/duncan-brown/1-ogc/blob/master/workflow/generate_workflow_og.sh)
+ 3. [A script for generating, planning, and running the workflow on the AEI Atlas cluster](https://github.com/duncan-brown/1-ogc/blob/master/workflow/generate_workflow_atlas.sh)
+
+The contents of the sub-directories are:
+
+ 1. A [veto definer file](https://github.com/gwastro/1-ogc/blob/master/workflow/auxiliary_files/H1L1-DUMMY_O1_CBC_VDEF-1126051217-1220400.xml) needed for the pipeline to process data quality information from LOSC].
+ 2. The [script](https://github.com/duncan-brown/1-ogc/blob/master/workflow/auxiliary_files/make-dtime-dphase-stat.sh) used to generate the data needed to incorporate the [time delay, and coalescence phase into the ranking of candidate events](https://arxiv.org/abs/1705.01513). You do not need to run this script as the [HDF5 file it generates](http://stash.osgconnect.net/~dbrown/1-ogc/workflow/auxiliary_files/dtime-dphase-stat.hdf) is available from online and is directly downloaded by the pipeline. This script is provided for reference.
+ 3. A [small template bank](https://github.com/duncan-brown/1-ogc/blob/master/workflow/auxiliary_files/H1L1-WORKFLOW_TEST_BANK-1163174417-604800.xml.gz) that can be used to test the workflow.
+ 4. A directory containing the [configuration files](https://github.com/duncan-brown/1-ogc/tree/master/workflow/configuration) used by the analysis.
 
 ## Obtain an OSG Connect account
 
