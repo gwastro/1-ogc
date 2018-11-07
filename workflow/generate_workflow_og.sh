@@ -10,7 +10,7 @@ n=""
 DATA_TYPE="LOSC_16_V1"
 
 # version of pycbc to use
-PYCBC_TAG="latest"
+PYCBC_TAG="v1.13.0"
 
 # do not submit the workflow
 NO_PLAN=""
@@ -53,7 +53,7 @@ while true ; do
       echo 
       echo "optional arguments:"
       echo "  -d, --data-type         type of data to analyze [LOSC_16_V1]"
-      echo "  -p, --pycbc-tag         valid tag of PyCBC to use [latest]"
+      echo "  -p, --pycbc-tag         valid tag of PyCBC to use [v1.13.0]"
       echo "  -h, --help              show this help message and exit"
       echo "  -N, --no-plan           exit after generating the workflow"
       echo "  -n, --no-submit         exit after generating and planning the workflow"
@@ -99,9 +99,6 @@ WEB_PATH=${HOME}/projects/1-ogc/results/analysis-${n}-${UNIQUE_ID}
 
 set -e
 
-# use PyCBC from CVMFS
-source ${HOME}/pycbc-opengw/bin/activate
-
 WORKFLOW_NAME=o1-analysis-${n}-${PYCBC_TAG}-${DATA_TYPE}
 OUTPUT_PATH=${WEB_PATH}/${WORKFLOW_NAME}
 WORKFLOW_TITLE="'O1 Analysis ${n} ${DATA_TYPE}'"
@@ -137,7 +134,7 @@ pycbc_make_coinc_search_workflow \
   "workflow-segments:segments-veto-definer-url:https://github.com/gwastro/1-ogc/raw/master/workflow/auxiliary_files/H1L1-DUMMY_O1_CBC_VDEF-1126051217-1220400.xml" \
   "coinc:statistic-files:http://stash.osgconnect.net/~dbrown/1-ogc/workflow/auxiliary_files/dtime-dphase-stat.hdf" \
   "pegasus_profile-inspiral:container|type:singularity" \
-  "pegasus_profile-inspiral:container|image:file://localhost/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:latest" \
+  "pegasus_profile-inspiral:container|image:file://localhost/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG}" \
   "pegasus_profile-inspiral:container|image_site:orangegrid" \
   "pegasus_profile-inspiral:container|mount:/cvmfs:/cvmfs:ro" \
   "pegasus_profile-inspiral:condor|request_memory:2400" \

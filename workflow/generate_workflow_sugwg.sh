@@ -10,7 +10,7 @@ n=""
 DATA_TYPE="LOSC_16_V1"
 
 # version of pycbc to use
-PYCBC_TAG="latest"
+PYCBC_TAG="v1.13.0"
 
 # do not submit the workflow
 NO_PLAN=""
@@ -53,7 +53,7 @@ while true ; do
       echo 
       echo "optional arguments:"
       echo "  -d, --data-type         type of data to analyze [LOSC_16_V1]"
-      echo "  -p, --pycbc-tag         valid tag of PyCBC to use [latest]"
+      echo "  -p, --pycbc-tag         valid tag of PyCBC to use [v1.13.0]"
       echo "  -h, --help              show this help message and exit"
       echo "  -N, --no-plan           exit after generating the workflow"
       echo "  -n, --no-submit         exit after generating and planning the workflow"
@@ -98,9 +98,6 @@ PROJECT_PATH=${HOME}/projects/1-ogc/analysis/analysis-${n}-${UNIQUE_ID}
 WEB_PATH=${HOME}/projects/1-ogc/results/analysis-${n}-${UNIQUE_ID}
 
 set -e
-
-# use PyCBC from CVMFS
-source ${HOME}/pycbc-opengw/bin/activate
 
 WORKFLOW_NAME=o1-analysis-${n}-${PYCBC_TAG}-${DATA_TYPE}
 OUTPUT_PATH=${WEB_PATH}/${WORKFLOW_NAME}
