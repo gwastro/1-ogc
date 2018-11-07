@@ -44,7 +44,7 @@ lowmass_candidates = all_candidates[region]
 
 
 ##### File format #####
-Both datasets are structured arrays which have the following named columns. Some of this gives information specific to either the 
+Both datasets are structured arrays which have the following named columns. Some of these columns give information specific to either the 
 LIGO Hanford or Livingston detectors. Where this is the case, the name of the column is prefixed with either a `H1` or `L1`.
 
 | Key           | Description                                                                                                                         |
