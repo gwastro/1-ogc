@@ -7,7 +7,11 @@
  <sub>3. Department of Physics, Syracuse University, Syracuse, NY 13244, USA</sub>  
  <sub>4. Fayetteville-Manlius High School, Manlius, NY 13104, USA</sub>  
 
-This directory contains the scripts and configuration files necessary to reproduce the 1-OGC catalog using public data and code using the [Open Science Grid](). To use these instructions, you will need an [OSG Connect](https://support.opensciencegrid.org/support/solutions/articles/5000632072-registration-and-login-for-osg-connect) account.
+This directory contains the scripts and configuration files necessary to reproduce the 1-OGC catalog using public data and code using the [Open Science Grid](). 
+
+## Obtain an OSG Connect account
+
+To use these instructions, you will need to follow the [OSG Connect registration instructions](https://support.opensciencegrid.org/support/solutions/articles/5000632072-registration-and-login-for-osg-connect) to get an account. Once you are set up with an account, you can [set up your account for ssh access](https://support.opensciencegrid.org/support/solutions/articles/12000027675-generate-ssh-key-pair-and-add-the-public-key-to-your-account) so you can log into the submit host `login.osgconnect.net`. If you are not familiar with  may want to explore some of the tutorials in the [quickstart guide](https://support.opensciencegrid.org/support/solutions/articles/5000633410-osg-connect-quickstart) and [pegasus introduction](https://support.opensciencegrid.org/support/solutions/articles/5000639789-pegasus) before attempting to run this workflow.
 
 ## Obtain a grid certificate
 
