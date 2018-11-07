@@ -2,8 +2,8 @@
 
 **Alexander H. Nitz<sup>1,2</sup>, Collin Capano<sup>1,2</sup>, Alex B. Nielsen<sup>1,2</sup>, Steven Reyes<sup>3</sup>, Rebecca White<sup>4,3</sup>, Duncan A. Brown<sup>3</sup>, Badri Krishnan<sup>1,2</sup>**
 
- <sub>1.[Albert-Einstein-Institut, Max-Planck-Institut for Gravitationsphysik, D-30167 Hannover, Germany](http://www.aei.mpg.de/obs-rel-cos)</sub>  
- <sub>2.Leibniz Universitat Hannover, D-30167 Hannover, Germany</sub>  
+ <sub>1. [Albert-Einstein-Institut, Max-Planck-Institut for Gravitationsphysik, D-30167 Hannover, Germany](http://www.aei.mpg.de/obs-rel-cos)</sub>  
+ <sub>2. Leibniz Universitat Hannover, D-30167 Hannover, Germany</sub>  
  <sub>3. Department of Physics, Syracuse University, Syracuse, NY 13244, USA</sub>  
  <sub>4. Fayetteville-Manlius High School, Manlius, NY 13104, USA</sub>  
 
