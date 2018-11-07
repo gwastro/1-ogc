@@ -119,6 +119,8 @@ This script performs several actions:
 3. It runs ppycbc_submit_dax](http://pycbc.org/pycbc/latest/html/workflow/pycbc_make_coinc_search_workflow.html#planning-and-submitting-the-workflow) to plan the workflow using the [Pegasus WMS](https://pegasus.isi.edu).
 4. It submits the planned workflow to [HTCondor](https://research.cs.wisc.edu/htcondor/) for execution.
 
+There is no need to download the LOSC, as it it automatically obtained at runtime by the workflow using [CVMFS, XRootD, and StashCache.](https://arxiv.org/abs/1705.06202)
+
 When the workflow is planned and submitted, you will see a message like
 ```
 2018.11.07 17:08:28.529 CST:   Submitting to condor o1-analysis-1-v1_13_0-LOSC_16_V1-0.dag.condor.sub 
