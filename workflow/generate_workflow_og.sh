@@ -169,16 +169,18 @@ pushd output
 if [ "x${NO_PLAN}" == "x" ] ; then
   pycbc_submit_dax \
     --dax ${WORKFLOW_NAME}.dax \
-    --execution-sites osgconnect \
+    --execution-sites orangegrid \
     --no-create-proxy \
     --local-staging-server gsiftp://`hostname -f` \
     --remote-staging-server gsiftp://`hostname -f` \
+    --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
     --append-site-profile 'local:condor|requirements:((MY.JobUniverse == 7) || (MY.JobUniverse == 12) || (TARGET.CpuModelNumber == 44))' \
     --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
     --append-site-profile 'orangegrid:condor|requirements:(TARGET.vm_name is "ITS-C6-OSG-20160824") || (TARGET.vm_name is "its-u18-nfs-20181019")' \
     --append-site-profile 'orangegrid:condor|+vm_name:"its-u18-nfs-20181019"' \
     --append-site-profile 'orangegrid:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
-    --force-no-accounting-group ${NO_SUBMIT} \
+    --force-no-accounting-group ${NO_SUBMIT}
+
 fi
 
 popd
