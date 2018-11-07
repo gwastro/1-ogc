@@ -94,8 +94,8 @@ echo "Generating workflow for analysis ${n} using ${DATA_TYPE} data and PyCBC ${
 
 # locations of analysis directory and results directory
 UNIQUE_ID=`uuidgen`
-PROJECT_PATH=/stash/user/${USER}/1-ogc/analysis/analysis-${n}/${UNIQUE_ID}
-WEB_PATH=/stash/user/${USER}/public/1-ogc/results/analysis-${n}/${UNIQUE_ID}
+PROJECT_PATH=${HOME}/projects/1-ogc/analysis/analysis-${n}/${UNIQUE_ID}
+WEB_PATH=${HOME}/projects/1-ogc/results/analysis-${n}/${UNIQUE_ID}
 
 set -e
 
