@@ -136,7 +136,7 @@ export LIGO_DATAFIND_SERVER=sugwg-condor.phy.syr.edu:80
 if [ "x${TEST_WORKFLOW}" == "xyes" ] ; then
   CONFIG_OVERRIDES="workflow:start-time:1128466607 workflow:end-time:1128486607 workflow-tmpltbank:tmpltbank-pregenerated-bank:https://github.com/gwastro/1-ogc/raw/master/workflow/auxiliary_files/H1L1-WORKFLOW_TEST_BANK-1163174417-604800.xml.gz workflow-splittable-full_data:splittable-num-banks:2"
 else
-   CONFIG_OVERRIDES="workflow-splittable-full_data:splittable-num-banks:10"
+   CONFIG_OVERRIDES=""
 fi
 
 pycbc_make_coinc_search_workflow \
