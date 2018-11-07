@@ -9,6 +9,21 @@
 
 This directory contains the scripts and configuration files necessary to reproduce the 1-OGC catalog using public data and code using the [Open Science Grid](). To use these instructions, you will need an [OSG Connect](https://support.opensciencegrid.org/support/solutions/articles/5000632072-registration-and-login-for-osg-connect) account.
 
+## Obtain a grid certificate
+
+You will need to obtain an X509 grid certificate to run this workflow. To do this, visit the [CILogon certificate service](https://cilogon.org/) and log in with your institutional identity. CILogon will generate a certificate file called `usercred.p12`, which you should download and copy to `login.osgconnect.net`. One you have the file there, place it in the appropriate directory with the commands:
+```sh
+mkdir -p ~/.globus
+mv usercred.p12 ~/.globus
+chmod 600 ~/.globus/usercred.p12
+```
+You should now be able to run the command
+```sh
+grid-proxy-init
+```
+to create an X509 proxy certificate that the workflow will use. Create this proxy certificate before continuing.
+
+
 ## Set up environment
 
 Once you have obtained an account on [OSG Connect](https://support.opensciencegrid.org/support/solutions/articles/5000632072-registration-and-login-for-osg-connect), you should log in to the machine `login.osgconnect.net`.
@@ -53,7 +68,7 @@ source ~/pycbc-opengw/bin/activate
 
 Install PyCBC into the virtual environment by running the commands:
 ```sh
-pip install -e git+https://github.com/gwastro/pycbc.git@refs/pull/2414/head#egg=PyCBC
+pip install pycbc==1.13.0
 pip install lalsuite==6.48.1.dev20180717
 pip install -r ~/pycbc-opengw/src/pycbc/requirements.txt
 ```
