@@ -138,6 +138,9 @@ pycbc_make_coinc_search_workflow \
 
 pushd output
 
+if [ ! -d /local-scratch/${USER}/workflows ] ; then
+  mkdir -p /local-scratch/${USER}/workflows
+fi
 
 if [ "x${NO_PLAN}" == "x" ] ; then
   pycbc_submit_dax \
