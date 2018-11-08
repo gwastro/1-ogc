@@ -51,7 +51,6 @@ The workflow uses [StashCache](https://support.opensciencegrid.org/support/solut
 ```sh
 module load stashcache/5.1.2-py2.7
 ```
-Note that StashCache uses [SciTokens](https://scitokens.org/) for authentication, so there is no need to obtain an X509 grid certificate to run the workflow.
 
 ### Python Virtual Environment
 
