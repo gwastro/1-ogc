@@ -12,6 +12,9 @@ DATA_TYPE="LOSC_16_V1"
 # version of pycbc to use
 PYCBC_TAG="v1.13.0"
 
+# github user for config files
+GITHUB_USER="gwastro"
+
 # do not submit the workflow
 NO_PLAN=""
 
@@ -21,7 +24,7 @@ NO_SUBMIT=""
 # generate test workflow
 TEST_WORKFLOW=""
 
-GETOPT_CMD=`getopt -o a:d:p:thnN --long analysis-segment:,data-type:,pycbc-tag:,test-workflow,help,no-submit,no-plan -n 'generate_workflow.sh' -- "$@"`
+GETOPT_CMD=`getopt -o a:d:p:g:thnN --long analysis-segment:,data-type:,pycbc-tag:,github-user:,test-workflow,help,no-submit,no-plan -n 'generate_workflow.sh' -- "$@"`
 eval set -- "$GETOPT_CMD"
 
 while true ; do
@@ -41,6 +44,11 @@ while true ; do
         "") shift 2 ;;
         *) PYCBC_TAG=$2 ; shift 2 ;;
       esac ;;
+    -p|--github-user)
+      case "$2" in
+        "") shift 2 ;;
+        *) GITHUB_USER=$2 ; shift 2 ;;
+      esac ;;
     -t|--test-workflow) TEST_WORKFLOW='yes' ; shift ;;
     -n|--no-submit) NO_SUBMIT='--no-submit' ; shift ;;
     -N|--no-plan) NO_PLAN='yes' ; shift ;;
@@ -54,6 +62,7 @@ while true ; do
       echo "optional arguments:"
       echo "  -d, --data-type         type of data to analyze [LOSC_16_V1]"
       echo "  -p, --pycbc-tag         valid tag of PyCBC to use [v1.13.0]"
+      echo "  -g, --github-user       use 1-ocg repository from user [gwastro]"
       echo "  -h, --help              show this help message and exit"
       echo "  -N, --no-plan           exit after generating the workflow"
       echo "  -n, --no-submit         exit after generating and planning the workflow"
@@ -80,17 +89,8 @@ else
   fi
 fi
 
-if [ "x${DATA_TYPE}" == "x" ]; then
-  echo "Error: --data-type must be specified. Use --help for options."
-  exit 1
-fi
-
-if [ "x${PYCBC_TAG}" == "x" ]; then
-  echo "Error: --pycbc-tag must be specified. Use --help for options."
-  exit 1
-fi
-
 echo "Generating workflow for analysis ${n} using ${DATA_TYPE} data and PyCBC ${PYCBC_TAG}"
+echo "Downloadig configuration files from https://github.com/${GITHUB_USER}/1-ogc"
 
 # locations of analysis directory and results directory
 UNIQUE_ID=`uuidgen`
@@ -102,7 +102,7 @@ set -e
 WORKFLOW_NAME=o1-analysis-${n}-${PYCBC_TAG}-${DATA_TYPE}
 OUTPUT_PATH=${WEB_PATH}/${WORKFLOW_NAME}
 WORKFLOW_TITLE="'O1 Analysis ${n} ${DATA_TYPE}'"
-WORKFLOW_SUBTITLE="'PyCBC Open GW Analysis'"
+WORKFLOW_SUBTITLE="'PyCBC ${PYCBC_TAG} Open GW Analysis'"
 
 if [ -d ${PROJECT_PATH}/$WORKFLOW_NAME ] ; then
   echo "Error: ${PROJECT_PATH}/$WORKFLOW_NAME already exists."
@@ -114,7 +114,7 @@ pushd ${PROJECT_PATH}/$WORKFLOW_NAME
 export LIGO_DATAFIND_SERVER=sugwg-condor.phy.syr.edu:80
 
 if [ "x${TEST_WORKFLOW}" == "xyes" ] ; then
-  CONFIG_OVERRIDES="workflow:start-time:1128466607 workflow:end-time:1128486607 workflow-tmpltbank:tmpltbank-pregenerated-bank:https://github.com/gwastro/1-ogc/raw/master/workflow/auxiliary_files/H1L1-WORKFLOW_TEST_BANK-1163174417-604800.xml.gz workflow-splittable-full_data:splittable-num-banks:2"
+  CONFIG_OVERRIDES="workflow:start-time:1128466607 workflow:end-time:1128486607 workflow-tmpltbank:tmpltbank-pregenerated-bank:https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/auxiliary_files/H1L1-WORKFLOW_TEST_BANK-1163174417-604800.xml.gz workflow-splittable-full_data:splittable-num-banks:2"
 else
    CONFIG_OVERRIDES="workflow-splittable-full_data:splittable-num-banks:30"
 fi
@@ -122,16 +122,16 @@ fi
 pycbc_make_coinc_search_workflow \
 --workflow-name ${WORKFLOW_NAME} --output-dir output \
 --config-files \
-  https://github.com/gwastro/1-ogc/raw/master/workflow/configuration/analysis.ini \
-  https://github.com/gwastro/1-ogc/raw/master/workflow/configuration/losc_data.ini \
-  https://github.com/gwastro/1-ogc/raw/master/workflow/configuration/gps_times_O1_analysis_${n}.ini \
-  https://github.com/gwastro/1-ogc/raw/master/workflow/configuration/executables_osgconnect.ini \
-  https://github.com/gwastro/1-ogc/raw/master/workflow/configuration/plotting.ini \
+  https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/analysis.ini \
+  https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/losc_data.ini \
+  https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/gps_times_O1_analysis_${n}.ini \
+  https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/executables_osgconnect.ini \
+  https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/plotting.ini \
 --config-overrides ${CONFIG_OVERRIDES} \
   "results_page:output-path:${OUTPUT_PATH}" \
   "results_page:analysis-title:${WORKFLOW_TITLE}" \
   "results_page:analysis-subtitle:${WORKFLOW_SUBTITLE}" \
-  "workflow-segments:segments-veto-definer-url:https://github.com/gwastro/1-ogc/raw/master/workflow/auxiliary_files/H1L1-DUMMY_O1_CBC_VDEF-1126051217-1220400.xml" \
+  "workflow-segments:segments-veto-definer-url:https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/auxiliary_files/H1L1-DUMMY_O1_CBC_VDEF-1126051217-1220400.xml" \
   "coinc:statistic-files:http://stash.osgconnect.net/~dbrown/1-ogc/workflow/auxiliary_files/dtime-dphase-stat.hdf" \
   "workflow-${WORKFLOW_NAME}-main:staging-site:osgconnect=osgconnect-scratch" \
   "optimal_snr:cores:8"
