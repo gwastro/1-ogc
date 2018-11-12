@@ -21,10 +21,13 @@ NO_PLAN=""
 # do not submit the workflow
 NO_SUBMIT=""
 
+# platform for submission
+PLATFORM="osgconnect"
+
 # generate test workflow
 TEST_WORKFLOW=""
 
-GETOPT_CMD=`getopt -o a:d:p:g:thnN --long analysis-segment:,data-type:,pycbc-tag:,github-user:,test-workflow,help,no-submit,no-plan -n 'generate_workflow.sh' -- "$@"`
+GETOPT_CMD=`getopt -o a:d:p:g:P:thnN --long analysis-segment:,data-type:,pycbc-tag:,github-user:,platform:,test-workflow,help,no-submit,no-plan -n 'generate_workflow.sh' -- "$@"`
 eval set -- "$GETOPT_CMD"
 
 while true ; do
@@ -49,6 +52,11 @@ while true ; do
         "") shift 2 ;;
         *) GITHUB_USER=$2 ; shift 2 ;;
       esac ;;
+    -P|--platform)
+      case "$2" in
+        "") shift 2 ;;
+        *) PLATFORM=$2 ; shift 2 ;;
+      esac ;;
     -t|--test-workflow) TEST_WORKFLOW='yes' ; shift ;;
     -n|--no-submit) NO_SUBMIT='--no-submit' ; shift ;;
     -N|--no-plan) NO_PLAN='yes' ; shift ;;
@@ -63,6 +71,9 @@ while true ; do
       echo "  -d, --data-type         type of data to analyze [LOSC_16_V1]"
       echo "  -p, --pycbc-tag         valid tag of PyCBC to use [v1.13.0]"
       echo "  -g, --github-user       use 1-ocg repository from user [gwastro]"
+      echo "  -P, --platform          setup workflow to run on one of the following"
+      echo "                            platforms [osgconnect|orangegrid|vanilla]"
+      echo "                            default is osgconnect."
       echo "  -h, --help              show this help message and exit"
       echo "  -N, --no-plan           exit after generating the workflow"
       echo "  -n, --no-submit         exit after generating and planning the workflow"
@@ -89,13 +100,24 @@ else
   fi
 fi
 
+if [ "${PLATFORM}" != "osgconnect" ] && [ "${PLATFORM}" != "orangegrid" ] && [ "${PLATFORM}" != "vanilla" ] ; then
+  echo "Error: --platform must be one of osgconnect, orangegrid, or vanilla."
+  echo "       Got ${PLATFORM}"
+  exit 1
+fi
+
 echo "Generating workflow for analysis ${n} using ${DATA_TYPE} data and PyCBC ${PYCBC_TAG}"
 echo "Downloadig configuration files from https://github.com/${GITHUB_USER}/1-ogc"
 
 # locations of analysis directory and results directory
 UNIQUE_ID=`uuidgen`
-PROJECT_PATH=/stash/user/${USER}/1-ogc/analysis/analysis-${n}-${UNIQUE_ID}
-WEB_PATH=/stash/user/${USER}/public/1-ogc/results/analysis-${n}-${UNIQUE_ID}
+if [ ${PLATFORM} == "osgconnect" ] ; then
+  PROJECT_PATH=/stash/user/${USER}/1-ogc/analysis/analysis-${n}-${UNIQUE_ID}
+  WEB_PATH=/stash/user/${USER}/public/1-ogc/results/analysis-${n}-${UNIQUE_ID}
+else
+ PROJECT_PATH=${HOME}/projects/1-ogc/analysis/analysis-${n}-${UNIQUE_ID}
+ WEB_PATH=${HOME}/projects/1-ogc/results/analysis-${n}-${UNIQUE_ID}
+fi
 
 set -e
 
@@ -119,42 +141,68 @@ else
    CONFIG_OVERRIDES="workflow-splittable-full_data:splittable-num-banks:30"
 fi
 
+if [ ${PLATFORM} == "osgconnect" ] ; then
+  if [ ! -d /local-scratch/${USER}/workflows ] ; then
+    mkdir -p /local-scratch/${USER}/workflows
+  fi
+  PLATFORM_CONFIG_OVERRIDES="workflow-${WORKFLOW_NAME}-main:staging-site:osgconnect=osgconnect-scratch"
+  EXEC_FILE="_osgconnect"
+  SUBMIT_ARGS="--execution-sites osgconnect \
+    --local-staging-server stash:// \
+    --remote-staging-server stash:// \
+    --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
+    --append-site-profile 'osgconnect:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
+    --append-site-profile 'osgconnect:condor|+SingularityImage:\"/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG}\"' \
+    --local-dir /local-scratch/${USER}/workflows"
+elif [ ${PLATFORM} == "orangegrid" ] ; then
+  PLATFORM_CONFIG_OVERRIDES="pegasus_profile-inspiral:container|type:singularity \
+  pegasus_profile-inspiral:container|image:file://localhost/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG} \
+  pegasus_profile-inspiral:container|image_site:orangegrid \
+  pegasus_profile-inspiral:container|mount:/cvmfs:/cvmfs:ro \
+  pegasus_profile-inspiral:condor|request_memory:2400 \
+  executables:inspiral:/opt/pycbc/pycbc-software/bin/pycbc_inspiral \
+  pegasus_profile-inspiral:pycbc|site:orangegrid \
+  pegasus_profile-inspiral:hints|execution.site:orangegrid \
+  workflow-${WORKFLOW_NAME}-main:staging-site:orangegrid=local"
+  EXEC_FILE=""
+  SUBMIT_ARGS="--execution-sites orangegrid \
+    --local-staging-server gsiftp://`hostname -f` \
+    --remote-staging-server gsiftp://`hostname -f` \
+    --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
+    --append-site-profile 'orangegrid:condor|requirements:(TARGET.vm_name is \"ITS-C6-OSG-20160824\") || (TARGET.vm_name is \"its-u18-nfs-20181019\")' \
+    --append-site-profile 'orangegrid:condor|+vm_name:\"its-u18-nfs-20181019\"' \
+    --append-site-profile 'orangegrid:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'"
+else
+  PLATFORM_CONFIG_OVERRIDES=""
+  EXEC_FILE=""
+  SUBMIT_ARGS="--append-site-profile 'local:env|LD_LIBRARY_PATH:/opt/intel/composer_xe_2015.0.090/mkl/lib/intel64:/opt/intel/2015/composer_xe_2015.0.090/mkl/lib/intel64"
+fi
+
+
 pycbc_make_coinc_search_workflow \
 --workflow-name ${WORKFLOW_NAME} --output-dir output \
 --config-files \
   https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/analysis.ini \
   https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/losc_data.ini \
   https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/gps_times_O1_analysis_${n}.ini \
-  https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/executables_osgconnect.ini \
+  https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/executables${EXEC_FILE}.ini \
   https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/configuration/plotting.ini \
---config-overrides ${CONFIG_OVERRIDES} \
+--config-overrides ${CONFIG_OVERRIDES} ${PLATFORM_CONFIG_OVERRIDES} \
   "results_page:output-path:${OUTPUT_PATH}" \
   "results_page:analysis-title:${WORKFLOW_TITLE}" \
   "results_page:analysis-subtitle:${WORKFLOW_SUBTITLE}" \
   "workflow-segments:segments-veto-definer-url:https://github.com/${GITHUB_USER}/1-ogc/raw/master/workflow/auxiliary_files/H1L1-DUMMY_O1_CBC_VDEF-1126051217-1220400.xml" \
   "coinc:statistic-files:http://stash.osgconnect.net/~dbrown/1-ogc/workflow/auxiliary_files/dtime-dphase-stat.hdf" \
-  "workflow-${WORKFLOW_NAME}-main:staging-site:osgconnect=osgconnect-scratch" \
   "optimal_snr:cores:8"
 
 pushd output
 
-if [ ! -d /local-scratch/${USER}/workflows ] ; then
-  mkdir -p /local-scratch/${USER}/workflows
-fi
-
 if [ "x${NO_PLAN}" == "x" ] ; then
-  pycbc_submit_dax \
+  pycbc_submit_dax ${NO_SUBMIT} ${SUBMIT_ARGS} \
     --dax ${WORKFLOW_NAME}.dax \
-    --execution-sites osgconnect \
     --no-create-proxy \
-    --local-staging-server 'stash://' \
-    --remote-staging-server 'stash://' \
-    --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
-    --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
-    --append-site-profile 'osgconnect:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
-    --append-site-profile "osgconnect:condor|+SingularityImage:\"/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG}\"" \
-    --force-no-accounting-group ${NO_SUBMIT} \
-    --local-dir /local-scratch/${USER}/workflows
+    --force-no-accounting-group \
+    --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
 fi
 
 popd
