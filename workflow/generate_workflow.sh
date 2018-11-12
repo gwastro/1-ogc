@@ -116,7 +116,7 @@ if [ ${PLATFORM} == "osgconnect" ] ; then
   WEB_PATH=/stash/user/${USER}/public/1-ogc/results/analysis-${n}-${UNIQUE_ID}
 else
  PROJECT_PATH=${HOME}/projects/1-ogc/analysis/analysis-${n}-${UNIQUE_ID}
- WEB_PATH=${HOME}/projects/1-ogc/results/analysis-${n}-${UNIQUE_ID}
+ WEB_PATH=${HOME}/public_html/1-ogc/results/analysis-${n}-${UNIQUE_ID}
 fi
 
 set -e
