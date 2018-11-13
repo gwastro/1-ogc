@@ -147,7 +147,8 @@ if [ ${PLATFORM} == "osgconnect" ] ; then
     mkdir -p /local-scratch/${USER}/workflows
   fi
   PLATFORM_CONFIG_OVERRIDES="workflow-${WORKFLOW_NAME}-main:staging-site:osgconnect=osgconnect-scratch \
-    pegasus_profile-inspiral:condor|+InitialRequestMemory:2400"
+    pegasus_profile-inspiral:condor|+InitialRequestMemory:2400 \
+    calculate_psd:cores:1"
   EXEC_FILE="_osgconnect"
 elif [ ${PLATFORM} == "orangegrid" ] ; then
   PLATFORM_CONFIG_OVERRIDES="pegasus_profile-inspiral:container|type:singularity \
