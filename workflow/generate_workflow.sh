@@ -193,7 +193,7 @@ if [ "x${NO_PLAN}" == "x" ] ; then
       --dax ${WORKFLOW_NAME}.dax \
       --no-create-proxy \
       --force-no-accounting-group \
-      --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
+      --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
       --execution-sites osgconnect \
       --local-staging-server 'stash://' \
       --remote-staging-server 'stash://' \
@@ -206,7 +206,7 @@ if [ "x${NO_PLAN}" == "x" ] ; then
       --dax ${WORKFLOW_NAME}.dax \
       --no-create-proxy \
       --force-no-accounting-group \
-      --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
+      --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
       --execution-sites orangegrid \
       --local-staging-server gsiftp://`hostname -f` \
       --remote-staging-server gsiftp://`hostname -f` \
@@ -219,7 +219,7 @@ if [ "x${NO_PLAN}" == "x" ] ; then
       --dax ${WORKFLOW_NAME}.dax \
       --no-create-proxy \
       --force-no-accounting-group \
-      --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
+      --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
       --append-site-profile 'local:env|LD_LIBRARY_PATH:/opt/intel/composer_xe_2015.0.090/mkl/lib/intel64:/opt/intel/2015/composer_xe_2015.0.090/mkl/lib/intel64'
   fi
   popd
