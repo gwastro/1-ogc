@@ -107,7 +107,8 @@ if [ "${PLATFORM}" != "osgconnect" ] && [ "${PLATFORM}" != "orangegrid" ] && [ "
 fi
 
 echo "Generating workflow for analysis ${n} using ${DATA_TYPE} data and PyCBC ${PYCBC_TAG}"
-echo "Downloadig configuration files from https://github.com/${GITHUB_USER}/1-ogc"
+echo "Downloading configuration files from https://github.com/${GITHUB_USER}/1-ogc"
+echo "Generating workflow for platform ${PLATFORM}"
 
 # locations of analysis directory and results directory
 UNIQUE_ID=`uuidgen`
@@ -147,13 +148,6 @@ if [ ${PLATFORM} == "osgconnect" ] ; then
   fi
   PLATFORM_CONFIG_OVERRIDES="workflow-${WORKFLOW_NAME}-main:staging-site:osgconnect=osgconnect-scratch"
   EXEC_FILE="_osgconnect"
-  SUBMIT_ARGS="--execution-sites osgconnect \
-    --local-staging-server stash:// \
-    --remote-staging-server stash:// \
-    --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
-    --append-site-profile 'osgconnect:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
-    --append-site-profile 'osgconnect:condor|+SingularityImage:\"/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG}\"' \
-    --local-dir /local-scratch/${USER}/workflows"
 elif [ ${PLATFORM} == "orangegrid" ] ; then
   PLATFORM_CONFIG_OVERRIDES="pegasus_profile-inspiral:container|type:singularity \
   pegasus_profile-inspiral:container|image:file://localhost/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG} \
@@ -165,17 +159,9 @@ elif [ ${PLATFORM} == "orangegrid" ] ; then
   pegasus_profile-inspiral:hints|execution.site:orangegrid \
   workflow-${WORKFLOW_NAME}-main:staging-site:orangegrid=local"
   EXEC_FILE=""
-  SUBMIT_ARGS="--execution-sites orangegrid \
-    --local-staging-server gsiftp://`hostname -f` \
-    --remote-staging-server gsiftp://`hostname -f` \
-    --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
-    --append-site-profile 'orangegrid:condor|requirements:(TARGET.vm_name is \"ITS-C6-OSG-20160824\") || (TARGET.vm_name is \"its-u18-nfs-20181019\")' \
-    --append-site-profile 'orangegrid:condor|+vm_name:\"its-u18-nfs-20181019\"' \
-    --append-site-profile 'orangegrid:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'"
 else
   PLATFORM_CONFIG_OVERRIDES=""
   EXEC_FILE=""
-  SUBMIT_ARGS="--append-site-profile 'local:env|LD_LIBRARY_PATH:/opt/intel/composer_xe_2015.0.090/mkl/lib/intel64:/opt/intel/2015/composer_xe_2015.0.090/mkl/lib/intel64"
 fi
 
 
@@ -195,17 +181,50 @@ pycbc_make_coinc_search_workflow \
   "coinc:statistic-files:http://stash.osgconnect.net/~dbrown/1-ogc/workflow/auxiliary_files/dtime-dphase-stat.hdf" \
   "optimal_snr:cores:8"
 
-pushd output
 
 if [ "x${NO_PLAN}" == "x" ] ; then
-  pycbc_submit_dax ${NO_SUBMIT} ${SUBMIT_ARGS} \
-    --dax ${WORKFLOW_NAME}.dax \
-    --no-create-proxy \
-    --force-no-accounting-group \
-    --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
+  pushd output
+
+  if [ ${PLATFORM} == "osgconnect" ] ; then
+    if [ ! -d /local-scratch/${USER}/workflows ] ; then
+      mkdir -p /local-scratch/${USER}/workflows
+    fi
+    pycbc_submit_dax ${NO_SUBMIT} \
+      --dax ${WORKFLOW_NAME}.dax \
+      --no-create-proxy \
+      --force-no-accounting-group \
+      --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
+      --execution-sites osgconnect \
+      --local-staging-server 'stash://' \
+      --remote-staging-server 'stash://' \
+      --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
+      --append-site-profile 'osgconnect:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
+      --append-site-profile "osgconnect:condor|+SingularityImage:\"/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG}\"" \
+      --local-dir /local-scratch/${USER}/workflows
+  elif [ ${PLATFORM} == "orangegrid" ] ; then
+    pycbc_submit_dax ${NO_SUBMIT} \
+      --dax ${WORKFLOW_NAME}.dax \
+      --no-create-proxy \
+      --force-no-accounting-group \
+      --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
+      --execution-sites orangegrid \
+      --local-staging-server gsiftp://`hostname -f` \
+      --remote-staging-server gsiftp://`hostname -f` \
+      --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
+      --append-site-profile 'orangegrid:condor|requirements:(TARGET.vm_name is \"ITS-C6-OSG-20160824\") || (TARGET.vm_name is \"its-u18-nfs-20181019\")' \
+      --append-site-profile 'orangegrid:condor|+vm_name:\"its-u18-nfs-20181019\"' \
+      --append-site-profile 'orangegrid:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
+  else
+    pycbc_submit_dax ${NO_SUBMIT} \
+      --dax ${WORKFLOW_NAME}.dax \
+      --no-create-proxy \
+      --force-no-accounting-group \
+      --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
+      --append-site-profile 'local:env|LD_LIBRARY_PATH:/opt/intel/composer_xe_2015.0.090/mkl/lib/intel64:/opt/intel/2015/composer_xe_2015.0.090/mkl/lib/intel64'
+  fi
+  popd
 fi
 
-popd
 popd
 
 echo
