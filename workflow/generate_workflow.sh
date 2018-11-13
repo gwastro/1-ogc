@@ -146,18 +146,19 @@ if [ ${PLATFORM} == "osgconnect" ] ; then
   if [ ! -d /local-scratch/${USER}/workflows ] ; then
     mkdir -p /local-scratch/${USER}/workflows
   fi
-  PLATFORM_CONFIG_OVERRIDES="workflow-${WORKFLOW_NAME}-main:staging-site:osgconnect=osgconnect-scratch"
+  PLATFORM_CONFIG_OVERRIDES="workflow-${WORKFLOW_NAME}-main:staging-site:osgconnect=osgconnect-scratch \
+    pegasus_profile-inspiral:condor|+InitialRequestMemory:2400"
   EXEC_FILE="_osgconnect"
 elif [ ${PLATFORM} == "orangegrid" ] ; then
   PLATFORM_CONFIG_OVERRIDES="pegasus_profile-inspiral:container|type:singularity \
-  pegasus_profile-inspiral:container|image:file://localhost/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG} \
-  pegasus_profile-inspiral:container|image_site:orangegrid \
-  pegasus_profile-inspiral:container|mount:/cvmfs:/cvmfs:ro \
-  pegasus_profile-inspiral:condor|request_memory:2400 \
-  executables:inspiral:/opt/pycbc/pycbc-software/bin/pycbc_inspiral \
-  pegasus_profile-inspiral:pycbc|site:orangegrid \
-  pegasus_profile-inspiral:hints|execution.site:orangegrid \
-  workflow-${WORKFLOW_NAME}-main:staging-site:orangegrid=local"
+    pegasus_profile-inspiral:container|image:file://localhost/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG} \
+    pegasus_profile-inspiral:container|image_site:orangegrid \
+    pegasus_profile-inspiral:container|mount:/cvmfs:/cvmfs:ro \
+    pegasus_profile-inspiral:condor|+InitialRequestMemory:2400 \
+    executables:inspiral:/opt/pycbc/pycbc-software/bin/pycbc_inspiral \
+    pegasus_profile-inspiral:pycbc|site:orangegrid \
+    pegasus_profile-inspiral:hints|execution.site:orangegrid \
+    workflow-${WORKFLOW_NAME}-main:staging-site:orangegrid=local"
   EXEC_FILE=""
 else
   PLATFORM_CONFIG_OVERRIDES=""
