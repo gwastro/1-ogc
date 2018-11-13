@@ -213,8 +213,8 @@ if [ "x${NO_PLAN}" == "x" ] ; then
       --local-staging-server gsiftp://`hostname -f` \
       --remote-staging-server gsiftp://`hostname -f` \
       --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
-      --append-site-profile 'orangegrid:condor|requirements:(TARGET.vm_name is \"ITS-C6-OSG-20160824\") || (TARGET.vm_name is \"its-u18-nfs-20181019\")' \
-      --append-site-profile 'orangegrid:condor|+vm_name:\"its-u18-nfs-20181019\"' \
+      --append-site-profile 'orangegrid:condor|requirements:(TARGET.vm_name is "ITS-C6-OSG-20160824") || (TARGET.vm_name is "its-u18-nfs-20181019")' \
+      --append-site-profile 'orangegrid:condor|+vm_name:"its-u18-nfs-20181019"' \
       --append-site-profile 'orangegrid:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
   else
     pycbc_submit_dax ${NO_SUBMIT} \
