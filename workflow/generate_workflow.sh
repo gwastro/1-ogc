@@ -199,6 +199,7 @@ if [ "x${NO_PLAN}" == "x" ] ; then
       --execution-sites osgconnect \
       --local-staging-server 'stash://' \
       --remote-staging-server 'stash://' \
+      --append-pegasus-property 'pegasus.integrity.checking=none' \
       --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
       --append-site-profile 'osgconnect:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
       --append-site-profile "osgconnect:condor|+SingularityImage:\"/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG}\"" \
@@ -214,6 +215,7 @@ if [ "x${NO_PLAN}" == "x" ] ; then
       --local-staging-server gsiftp://`hostname -f` \
       --remote-staging-server gsiftp://`hostname -f` \
       --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
+      --append-pegasus-property 'pegasus.integrity.checking=none' \
       --append-site-profile 'orangegrid:condor|requirements:(TARGET.vm_name is "ITS-C6-OSG-20160824") || (TARGET.vm_name is "its-u18-nfs-20181019")' \
       --append-site-profile 'orangegrid:condor|+vm_name:"its-u18-nfs-20181019"' \
       --append-site-profile 'orangegrid:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation'
@@ -222,6 +224,7 @@ if [ "x${NO_PLAN}" == "x" ] ; then
       --dax ${WORKFLOW_NAME}.dax \
       --no-create-proxy \
       --force-no-accounting-group \
+      --append-pegasus-property 'pegasus.integrity.checking=none' \
       --append-site-profile 'local:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
       --append-site-profile 'local:env|LD_LIBRARY_PATH:/opt/intel/composer_xe_2015.0.090/mkl/lib/intel64:/opt/intel/2015/composer_xe_2015.0.090/mkl/lib/intel64'
   fi
