@@ -178,6 +178,14 @@ Note that Pegasus Dashboard is not available on the OSG Connect head node, so th
 ```sh
 pegasus-status -l /local-scratch/dbrown/workflows/pycbc-tmp.MF4haFwcCE/work 
 ```
+You can also run
+```sh
+condor_q -nobatch -daq
+```
+to see the status of queued jobs directly. Occationally, you may find that OSG puts your jobs into the Condor hold state (shown as `H` in the output of `condor_q`) due to transient issues. To release held jobs, run the command
+```sh
+condor_release $USER
+```
 
 ## Acknowledgments ##
 
