@@ -147,6 +147,9 @@ if [ ${PLATFORM} == "osgconnect" ] ; then
     mkdir -p /local-scratch/${USER}/workflows
   fi
   PLATFORM_CONFIG_OVERRIDES="workflow-${WORKFLOW_NAME}-main:staging-site:osgconnect=osgconnect-scratch \
+    workflow-foreground_minifollowups:staging-site:osgconnect=osgconnect-scratch \
+    workflow-sngl_minifollowups:staging-site:osgconnect=osgconnect-scratch \
+    workflow-injection_minifollowups:staging-site:osgconnect=osgconnect-scratch \
     pegasus_profile-inspiral:condor|+InitialRequestMemory:4000 \
     calculate_psd:cores:2"
   EXEC_FILE="_osgconnect"
