@@ -205,6 +205,7 @@ if [ "x${NO_PLAN}" == "x" ] ; then
       --append-pegasus-property 'pegasus.integrity.checking=none' \
       --append-pegasus-property 'pegasus.transfer.bypass.input.staging=true' \
       --append-site-profile 'osgconnect:env|LAL_DATA_PATH:/cvmfs/oasis.opensciencegrid.org/ligo/sw/pycbc/lalsuite-extra/e02dab8c/share/lalsimulation' \
+      --append-site-profile 'osgconnect:env|LIGO_DATAFIND_SERVER:sugwg-condor.phy.syr.edu:80' \
       --append-site-profile "osgconnect:condor|+SingularityImage:\"/cvmfs/singularity.opensciencegrid.org/pycbc/pycbc-el7:${PYCBC_TAG}\"" \
       --local-dir /local-scratch/${USER}/workflows
   elif [ ${PLATFORM} == "orangegrid" ] ; then
