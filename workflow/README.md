@@ -98,6 +98,15 @@ The workflow is planned by [Pegasus WMS](https://pegasus.isi.edu). You will need
 export PATH=/stash/user/dbrown/public/pegasus-4.9.1dev/bin:${PATH}
 ```
 
+## Environment setup
+
+The environment variables set above will be lost when you log out of `login.osgconnect.net` so you may want to add the following lines to you `~/.bash_profile` to set them when you log in:
+```sh
+module load stashcache/5.1.2-py2.7
+source ~/pycbc-opengw/bin/activate
+export PATH=/stash/user/dbrown/public/pegasus-4.9.1dev/bin:${PATH}
+```
+
 ## Clone this repository
 
 Clone this repository into your home directory (or another suitable location) on `login.osgconnect.org`. This can be any directory you like, *except* for directories under the PyCBC virtual environment you created. Use git to clone the respository and then change to the directory containing the clone with the commands
