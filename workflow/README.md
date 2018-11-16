@@ -9,6 +9,8 @@
 
 This directory contains the scripts and configuration files necessary to reproduce the 1-OGC catalog using public data and code using the [Open Science Grid]().
 
+These instructions are designed for users familiar with [PyCBC](https://pycbc.org/), [Pegasus WMS](https://pegasus.isi.edu/), [HTCondor](http://research.cs.wisc.edu/htcondor/), and [OSGConnect](https://osgconnect.net/) who would like to reproduce our results. We assume that the reader has familiarity with these tools and is able to [troubleshoot HTCondor errors] (https://support.opensciencegrid.org/support/solutions/articles/5000639785-troubleshooting-condor-errors) that can happen when running large workflows.
+
 The contents of this directory are:
 
  1. [A script for generating, planning, and running the workflow on the Open Science Grid](https://github.com/gwastro/1-ogc/blob/master/workflow/generate_workflow_osgconnect.sh)
