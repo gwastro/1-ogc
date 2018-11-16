@@ -88,7 +88,7 @@ Install PyCBC into the virtual environment by running the commands:
 ```sh
 pip install -r https://raw.githubusercontent.com/gwastro/pycbc/v1.13.0/requirements.txt
 pip install lalsuite==6.48.1.dev20180717
-pip install pycbc==1.13.0
+pip install pycbc==1.13.1
 ```
 
 ###  Pegasus WMS
