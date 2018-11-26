@@ -10,7 +10,7 @@ n=""
 DATA_TYPE="LOSC_16_V1"
 
 # version of pycbc to use
-PYCBC_TAG="v1.13.0"
+PYCBC_TAG="v1.13.1"
 
 # github user for config files
 GITHUB_USER="gwastro"
