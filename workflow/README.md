@@ -86,7 +86,7 @@ source ~/pycbc-opengw/bin/activate
 
 Install PyCBC into the virtual environment by running the commands:
 ```sh
-pip install -r https://raw.githubusercontent.com/gwastro/pycbc/v1.13.0/requirements.txt
+pip install -r https://raw.githubusercontent.com/gwastro/pycbc/v1.13.1/requirements.txt
 pip install lalsuite==6.48.1.dev20180717
 pip install pycbc==1.13.1
 ```
@@ -178,11 +178,11 @@ Note that it make take a while for the dashboard entry to appear while the workf
 is parsed by the dashboard. The delay can be on the order of one hour for very large
 workflows.
 
-/stash/user/dbrown/1-ogc/analysis/analysis-1-ea19e064-7e57-4d18-9248-293c8bbc1132/o1-analysis-1-v1.13.0-LOSC_16_V1 ~/1-ogc
+/stash/user/dbrown/1-ogc/analysis/analysis-1-ea19e064-7e57-4d18-9248-293c8bbc1132/o1-analysis-1-v1.13.1-LOSC_16_V1 ~/1-ogc
 ~/1-ogc
 
-Workflow created in /stash/user/dbrown/1-ogc/analysis/analysis-1-ea19e064-7e57-4d18-9248-293c8bbc1132/o1-analysis-1-v1.13.0-LOSC_16_V1
-Results will be availale in /stash/user/dbrown/public/1-ogc/results/analysis-1-ea19e064-7e57-4d18-9248-293c8bbc1132/o1-analysis-1-v1.13.0-LOSC_16_V1
+Workflow created in /stash/user/dbrown/1-ogc/analysis/analysis-1-ea19e064-7e57-4d18-9248-293c8bbc1132/o1-analysis-1-v1.13.1-LOSC_16_V1
+Results will be availale in /stash/user/dbrown/public/1-ogc/results/analysis-1-ea19e064-7e57-4d18-9248-293c8bbc1132/o1-analysis-1-v1.13.1-LOSC_16_V1
 ```
 
 Note that Pegasus Dashboard is not available on the OSG Connect head node, so the dashboard URL printed will not work. You can check the status of the workflow by running `pegasus-status` as shown by the messages printed when the job is submitted, e.g.
